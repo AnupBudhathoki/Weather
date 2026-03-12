@@ -1,6 +1,12 @@
 from django.shortcuts import render
 import requests
 from django.contrib import messages
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+openweather_key = os.getenv('OPENWEATHER_API_KEY')
+unsplash_key = os.getenv('UNSPLASH_CLIENT_ID')
 
 # Create your views here.
 def index(request):
@@ -9,11 +15,11 @@ def index(request):
     else:
         city="kathmandu"
 
-    url=f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid=bf22686cf11682e29d657b984d138978"
+    url=f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={openweather_key}"
     param={'units':'metric'}
     data=requests.get(url,param).json()
 
-    img_url=f"https://api.unsplash.com/search/photos?query={city}&per_page=1&client_id=AocYclv8-7zt1nkxHU7cN4ZMEXoOoNvgBwIvjMYUufI"
+    img_url=f"https://api.unsplash.com/search/photos?query={city}&per_page=1&client_id={unsplash_key}"
     response=requests.get(img_url).json()
     
 
